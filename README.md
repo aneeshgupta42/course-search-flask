@@ -1,30 +1,14 @@
 # course-search-flask
 flask based MOOC course aggregator (search by topic)
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
-## Welcome
-
-Hello. Want to get started with Flask quickly? Good. You came to the right place. This Flask application framework is pre-configured with **Flask-SQLAlchemy**, **Flask-WTF**, **Fabric**, **Coverage**, and the **Bootstrap** frontend (among others). This will get your Flask app up and running on Heroku or PythonAnywhere quickly. Use this starter, boilerplate for all you new Flask projects. Cheers!
-
-<hr>
-
-![real-python-logo](https://raw.githubusercontent.com/realpython/about/master/rp_small.png)
-
-**Designed for the [Real Python](http://www.realpython.com) course.**
-
-<hr>
-
-Preview the skeleton app here - [http://www.flaskboilerplate.com/](http://www.flaskboilerplate.com/)
-
 **EXAMPLE APP: [http://flasktaskr.herokuapp.com/](http://flasktaskr.herokuapp.com/)**
 
 ### Quick Start
 
 1. Clone the repo
   ```
-  $ git clone https://github.com/realpython/flask-boilerplate.git
-  $ cd flask-boilerplate
+  $ git clone git@github.com:aneeshgupta42/course-search-flask.git
+  $ cd course-search-flask
   ```
 
 2. Initialize and activate a virtualenv:
@@ -206,11 +190,5 @@ PUSH and PULL away!
 5. Add a domain name to [Heroku](https://devcenter.heroku.com/articles/custom-domains) or PythonAnywhere via a [CNAME](http://en.wikipedia.org/wiki/CNAME_record) record
 5. DEVELOP YOUR APP - need [help](http://realpython.com)?
 
-### Learn More
 
-1. [Getting Started with Python on Heroku](https://devcenter.heroku.com/articles/python)
-2. [PythonAnywhere - Help](https://www.pythonanywhere.com/help/)
-1. [Flask Documentation](http://flask.pocoo.org/docs/)
-2. [Flask Extensions](http://flask.pocoo.org/extensions/)
-1. [Real Python](http://www.realpythonfortheweb.com) :)
-
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
