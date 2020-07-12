@@ -30,10 +30,12 @@ def udemyscrape(course_name):
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
     driver.get(edx_url)
     records=[]
+    run=0
     while len(records)<3:
         htmlSource = driver.page_source
         soup = BeautifulSoup(htmlSource, 'html.parser')
         records = soup.findAll("div", {"class":"popover--popover--t3rNO popover--popover-hover--14ngr"})
+        
     driver.close()
     # time.sleep(7.5)
         
@@ -89,6 +91,9 @@ def udemyscrape(course_name):
             image = BeautifulSoup(str(record_image_div[0]), 'html.parser').findAll('img')[0]
             record_image_link = image.get('src')
             print(record_image_link) 
+            if record_image_link.endswith('svg'):
+                record_image_link= "https://i.ibb.co/QX1fWDT/default-meta-image.png"
+                    
             data["image"] = record_image_link
         except:
             data["image"] = ""

@@ -10,6 +10,7 @@ from forms import *
 import os
 from scrapes.coursera import courserascrape 
 from scrapes.edx import edxscrape
+from scrapes.youtube import youtubescrape
 from scrapes.udemy import udemyscrape
 #----------------------------------------------------------------------------#
 # App Config.
@@ -57,7 +58,9 @@ def my_courses_search():
     coursera = courserascrape(text)
     edx = edxscrape(text)
     udemy = udemyscrape(text)
-    processed_text = {"COURSERA":coursera, "EDX": edx, "UDEMY": udemy}
+    youtube= youtubescrape(text)
+    # print(youtubescrape(text))
+    processed_text = {"COURSERA":coursera, "EDX": edx, "UDEMY": udemy, "YOUTUBE":youtube}
     
     return render_template('pages/results.html', websites = processed_text)
 
