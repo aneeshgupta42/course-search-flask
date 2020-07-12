@@ -9,6 +9,7 @@ from logging import Formatter, FileHandler
 from forms import *
 import os
 from scrapes.coursera import scrape 
+from scrapes.edx import edxscrape
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -54,6 +55,7 @@ def my_form():
 def my_courses_search():
     text = request.form['text']
     processed_text = scrape(text)
+    edxscrape(text)
     return render_template('pages/results.html', courses = processed_text)
 
 
