@@ -69,4 +69,5 @@ if __name__ == "__main__":
     # tree = scrape("computer vision")
     # tree = scrape("java")
     tree = courserascrape("data structures algorithms")
+    print(tree)
 
