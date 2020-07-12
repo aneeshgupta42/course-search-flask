@@ -59,6 +59,7 @@ def courserascrape(course_name):
             data["image"] = record_image_link
         except:
             data["image"] = ""
+        data["color"]="lightblue"
         return_list.append(data)
         print("\n")
 

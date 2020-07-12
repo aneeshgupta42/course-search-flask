@@ -57,7 +57,8 @@ def my_courses_search():
     coursera = courserascrape(text)
     edx = edxscrape(text)
     udemy = udemyscrape(text)
-    processed_text = {"coursera":coursera, "edx": edx, "udemy": udemy}
+    processed_text = {"COURSERA":coursera, "EDX": edx, "UDEMY": udemy}
+    
     return render_template('pages/results.html', websites = processed_text)
 
 

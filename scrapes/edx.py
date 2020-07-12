@@ -73,7 +73,9 @@ def edxscrape(course_name):
             data["image"] = record_image_link
         except:
             data["image"] = ""
+        data["color"]="grey"
         return_list.append(data)
+
         print("\n")
 
     return return_list

@@ -1,25 +1,31 @@
 {% extends 'layouts/main.html' %}
-{% block title %}Home{% endblock %}
-{% block content %}
 
+{% block content %}
 <div class="page-header">
   <form method="POST">
-    <h1>Enter a Course topic</h1>
-    <input name="text">
-    <input type="submit">
+
+    <h1 class="display-4">Enter a Course topic</h1>
+    <div class="form-group">
+      <input class="form-control input-lg" style="height: 2em; font-size: 1.5em; margin-bottom: 0.5em;" name="text">
+      <input class="form-control btn btn-primary input-lg" style="height: 2em; font-size: 1.5em;" type="submit">
+    </div>
   </form>
-  {% for courses in websites %}  
-    {% for course in websites[courses] %}
-      <h1>{{courses}}</h1>
+  {% for courses in websites %}
+
+  {% for course in websites[courses] %}
+  <h1 style="margin-top:5em; text-align: center; background-color:{{course['color']}}">{{courses}}</h1>
+  <ul class="list-group list-group-flush">
+    <div class="card list-group-item" style="margin-top:3em">
       <h1>{{course["title"]}}</h1>
-      <h2>Offered by: {{course["partner"]}}</h2>
-      <img src='{{course["image"]}}'>
-      <a href='{{course["link"]}}'>Go to course</a>
-    {% endfor %}
+      <h2 style="color: lightcoral;">Offered by: {{course["partner"]}}</h2>
+      <img style="width: 18rem;" src='{{course["image"]}}'>
+      <a href='{{course["link"]}}' style="margin-left: 3em; font-size: 2em;">Go to course</a>
+    </div>
+  </ul>
+  {% endfor %}
+
   {% endfor %}
 </div>
-<p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and
-  CSS. A fixed navbar has been added within <code>#wrap</code> with <code>padding-top: 60px;</code> on the
-  <code>.container</code>.</p>
+
 
 {% endblock %}
