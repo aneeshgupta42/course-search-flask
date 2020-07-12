@@ -54,8 +54,10 @@ def my_form():
 @app.route('/', methods=['POST'])
 def my_courses_search():
     text = request.form['text']
-    processed_text = scrape(text)
-    edxscrape(text)
+    processed_text=[]
+    processed_text.append(scrape(text))
+    processed_text.append(edxscrape(text))
+    print(processed_text)
     return render_template('pages/results.html', courses = processed_text)
 
 
