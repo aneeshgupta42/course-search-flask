@@ -8,18 +8,15 @@
     <input name="text">
     <input type="submit">
   </form>
-  <!-- <ul> -->
-  {% for course in courses %}
-  {% for Onecourse in course %}
-  <!-- <li> -->
-  <h1>{{Onecourse["title"]}}</h1>
-  <h2>Offered by: {{Onecourse["partner"]}}</h2>
-  <img src='{{Onecourse["image"]}}'>
-  <a href='{{Onecourse["link"]}}'>Go to course</a>
-  <!-- </li> -->
+  {% for courses in websites %}  
+    {% for course in websites[courses] %}
+      <h1>{{courses}}</h1>
+      <h1>{{course["title"]}}</h1>
+      <h2>Offered by: {{course["partner"]}}</h2>
+      <img src='{{course["image"]}}'>
+      <a href='{{course["link"]}}'>Go to course</a>
+    {% endfor %}
   {% endfor %}
-  {% endfor %}
-  <!-- </ul> -->
 </div>
 <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and
   CSS. A fixed navbar has been added within <code>#wrap</code> with <code>padding-top: 60px;</code> on the

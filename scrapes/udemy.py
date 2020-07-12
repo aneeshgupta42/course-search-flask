@@ -86,4 +86,4 @@ def udemyscrape(course_name):
 if __name__ == "__main__":
     # tree = scrape("computer vision")
     # tree = scrape("java")
-    tree = scrape("data structures algorithms")
+    tree = udemyscrape("data structures algorithms")

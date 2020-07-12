@@ -8,9 +8,9 @@ import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
-from scrapes.coursera import scrape 
+from scrapes.coursera import courserascrape 
+from scrapes.edx import edxscrape
 from scrapes.udemy import udemyscrape
-
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -54,11 +54,11 @@ def my_form():
 @app.route('/', methods=['POST'])
 def my_courses_search():
     text = request.form['text']
-    processed_text=[]
-    processed_text.append(scrape(text))
-    processed_text.append(udemyscrape(text))
-    print(processed_text)
-    return render_template('pages/results.html', courses = processed_text)
+    coursera = courserascrape(text)
+    edx = edxscrape(text)
+    udemy = udemyscrape(text)
+    processed_text = {"coursera":coursera, "edx": edx, "udemy": udemy}
+    return render_template('pages/results.html', websites = processed_text)
 
 
 @app.route('/about')
