@@ -9,19 +9,24 @@ import chromedriver_binary
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-
+GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
+CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 
 def udemyscrape(course_name):
     edx_name_parse = quote(course_name)
     session = HTMLSession()
-    
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument("--headless") 
+    chrome_options.binary_location = GOOGLE_CHROME_PATH
     edx_home_url = "https://www.udemy.com"
     edx_url = "https://www.udemy.com/courses/search/?src=ukw&q="+ edx_name_parse
     # print(edx_url)
     # r = session.get(edx_url)
     pageContent=requests.get(edx_url)
     # r.html.render()
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
     driver.get(edx_url)
     time.sleep(5)
     htmlSource = driver.page_source
