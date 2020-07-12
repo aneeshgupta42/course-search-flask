@@ -8,19 +8,18 @@
     <input name="text">
     <input type="submit">
   </form>
-  <!-- <ul> -->
   {% for courses in websites %}  
-  {% for course in courses %}
-    <!-- <li> -->
+    {% for course in websites[courses] %}
+      <h1>{{courses}}</h1>
       <h1>{{course["title"]}}</h1>
       <h2>Offered by: {{course["partner"]}}</h2>
-      <img src = '{{course["image"]}}'>
-      <a href = '{{course["link"]}}'>Go to course</a>
-    <!-- </li> -->
+      <img src='{{course["image"]}}'>
+      <a href='{{course["link"]}}'>Go to course</a>
+    {% endfor %}
   {% endfor %}
-  {% endfor %}
-<!-- </ul> -->
 </div>
-<p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added within <code>#wrap</code> with <code>padding-top: 60px;</code> on the <code>.container</code>.</p>
+<p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and
+  CSS. A fixed navbar has been added within <code>#wrap</code> with <code>padding-top: 60px;</code> on the
+  <code>.container</code>.</p>
 
 {% endblock %}
