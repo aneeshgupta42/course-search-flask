@@ -6,9 +6,13 @@ from requests_html import HTMLSession
 from selenium import webdriver
 import time
 import chromedriver_binary
+import os
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys  
 from selenium.webdriver.chrome.options import Options  
+
+GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
+CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
  
 def skillsharescrape(course_name):
     chrome_bin = os.environ.get('GOOGLE_CHROME_BIN', 'chromedriver')
@@ -22,7 +26,7 @@ def skillsharescrape(course_name):
     skillshare_url = "https://www.skillshare.com/search?query=" + course_name_parse
 
     pageContent=requests.get(skillshare_url)
-     htmlSource = pageContent.text
+    htmlSource = pageContent.text
 
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
     driver.get(skillshare_url)
