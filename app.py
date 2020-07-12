@@ -62,7 +62,7 @@ def my_courses_search():
     youtube= youtubescrape(text)
     skillshare = skillsharescrape(text)
     # print(youtubescrape(text))
-    processed_text = {"COURSERA":coursera, "EDX": edx, "UDEMY": udemy, "YOUTUBE":youtube, "SKILLSHARE" : skillshare}
+    processed_text = {"COURSERA":coursera, "EDX": edx, "UDEMY": udemy, "YOUTUBE":youtube, "SKILLSHARE":skillshare}
     
     return render_template('pages/results.html', websites = processed_text)
 
