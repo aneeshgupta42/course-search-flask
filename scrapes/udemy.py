@@ -11,7 +11,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 
-def edxscrape(course_name):
+def udemyscrape(course_name):
     edx_name_parse = quote(course_name)
     session = HTMLSession()
     
