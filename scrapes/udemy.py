@@ -91,6 +91,9 @@ def udemyscrape(course_name):
             image = BeautifulSoup(str(record_image_div[0]), 'html.parser').findAll('img')[0]
             record_image_link = image.get('src')
             print(record_image_link) 
+            if record_image_link.endswith('svg'):
+                record_image_link= https://i.ibb.co/QX1fWDT/default-meta-image.png
+                    
             data["image"] = record_image_link
         except:
             data["image"] = ""
