@@ -5,51 +5,35 @@ from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 from selenium import webdriver
 import time
-import os
 import chromedriver_binary
-#from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
 
 
-GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
-CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 
-def udemyscrape(course_name):
-    chrome_bin = os.environ.get('GOOGLE_CHROME_BIN', 'chromedriver')
+
+def edxscrape(course_name):
     edx_name_parse = quote(course_name)
     session = HTMLSession()
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument("--headless") 
-    chrome_options.binary_location = chrome_bin
+    
     edx_home_url = "https://www.udemy.com"
     edx_url = "https://www.udemy.com/courses/search/?src=ukw&q="+ edx_name_parse
     # print(edx_url)
-    # Not needed - prev method that didn't work. here for reference
+    # r = session.get(edx_url)
     pageContent=requests.get(edx_url)
-    driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
+    # r.html.render()
+    driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get(edx_url)
-    records=[]
-    while len(records)<3:
-        htmlSource = driver.page_source
-        soup = BeautifulSoup(htmlSource, 'html.parser')
-        records = soup.findAll("div", {"class":"popover--popover--t3rNO popover--popover-hover--14ngr"})
-    driver.close()
-    # time.sleep(7.5)
-        
+    time.sleep(5)
+    htmlSource = driver.page_source
     # print(htmlSource)
-    
-    # time.sleep(5)
-    # htmlSource = driver.page_source
-    # print(htmlSource)
-    # soup = BeautifulSoup(htmlSource, 'html.parser')
-    # tree = html.fromstring(htmlSource)
+    soup = BeautifulSoup(htmlSource, 'html.parser')
+    tree = html.fromstring(htmlSource)
     # print(tree)
-    
+    driver.close()
     # print(pageContent.text)
-    # soup = BeautifulSoup(htmlSource, 'html.parser')
+    soup = BeautifulSoup(htmlSource, 'html.parser')
     # print(soup)
-    # records = soup.findAll("div", {"class":"popover--popover--t3rNO popover--popover-hover--14ngr"})
+    records = soup.findAll("div", {"class":"popover--popover--t3rNO popover--popover-hover--14ngr"})
     print(records)
     print("Num of records on page:", len(records))
     top_5_records = records[:5]
@@ -92,9 +76,7 @@ def udemyscrape(course_name):
             data["image"] = record_image_link
         except:
             data["image"] = ""
-        data["color"]="orangered"
         return_list.append(data)
-    
         print("\n")
 
     return return_list
@@ -104,4 +86,4 @@ def udemyscrape(course_name):
 if __name__ == "__main__":
     # tree = scrape("computer vision")
     # tree = scrape("java")
-    tree = udemyscrape("data structures algorithms")
+    tree = edxscrape("data structures algorithms")
