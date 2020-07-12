@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 from selenium import webdriver
 import time
+import chromedriver_binary
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 
@@ -19,7 +21,7 @@ def edxscrape(course_name):
     # r = session.get(edx_url)
     pageContent=requests.get(edx_url)
     # r.html.render()
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get(edx_url)
     time.sleep(5)
     htmlSource = driver.page_source

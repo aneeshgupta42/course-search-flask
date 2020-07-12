@@ -36,3 +36,7 @@ Exiting due to channel error.
 1594519431654	Marionette	INFO	Stopped listening on port 62551
 Exiting due to channel error.
 Exiting due to channel error.
+1594525312959	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "-marionette" "-foreground" "-no-remote" "-profile" "/var/folders/5s/nd9r2s8x60q4qmnrnhc0d9h40000gn/T/rust_mozprofilebrVqDX"
+1594525314947	Marionette	INFO	Listening on port 63758
+1594525315007	Marionette	WARN	TLS certificate errors will be ignored for this session
+1594525320779	Marionette	INFO	Stopped listening on port 63758
