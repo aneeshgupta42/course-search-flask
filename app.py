@@ -55,9 +55,9 @@ def my_form():
 def my_courses_search():
     text = request.form['text']
     coursera = courserascrape(text)
-    edx = edxscrape(text)
-    udemy = udemyscrape(text)
-    processed_text = {"COURSERA":coursera, "EDX": edx, "UDEMY": udemy}
+    # edx = edxscrape(text)
+    # udemy = udemyscrape(text)
+    processed_text = {"COURSERA":coursera, "EDX": [], "UDEMY": []}
     
     return render_template('pages/results.html', websites = processed_text)
 

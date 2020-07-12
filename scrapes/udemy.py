@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 from selenium import webdriver
 import time
+import os
 import chromedriver_binary
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -13,13 +14,14 @@ GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
 CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 
 def udemyscrape(course_name):
+    chrome_bin = os.environ.get('GOOGLE_CHROME_BIN', 'chromedriver')
     edx_name_parse = quote(course_name)
     session = HTMLSession()
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument("--headless") 
-    chrome_options.binary_location = GOOGLE_CHROME_PATH
+    chrome_options.binary_location = chrome_bin
     edx_home_url = "https://www.udemy.com"
     edx_url = "https://www.udemy.com/courses/search/?src=ukw&q="+ edx_name_parse
     # print(edx_url)

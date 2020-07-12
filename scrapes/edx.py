@@ -5,6 +5,7 @@ import time
 from urllib.parse import quote
 from bs4 import BeautifulSoup
 import chromedriver_binary
+import os
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys  
 from selenium.webdriver.chrome.options import Options  
@@ -12,11 +13,12 @@ from selenium.webdriver.chrome.options import Options
 GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
 CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 def edxscrape(course_name):
+    chrome_bin = os.environ.get('GOOGLE_CHROME_BIN', 'chromedriver')
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument("--headless") 
-    chrome_options.binary_location = GOOGLE_CHROME_PATH
+    chrome_options.binary_location = chrome_bin
     edx_name_parse = quote(course_name)
     edx_home_url = "https://www.edx.org"
     edx_url = "https://www.edx.org/search?tab=course&q=" + edx_name_parse
