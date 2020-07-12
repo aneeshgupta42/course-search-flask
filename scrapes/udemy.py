@@ -92,7 +92,7 @@ def udemyscrape(course_name):
             record_image_link = image.get('src')
             print(record_image_link) 
             if record_image_link.endswith('svg'):
-                record_image_link= https://i.ibb.co/QX1fWDT/default-meta-image.png
+                record_image_link= "https://i.ibb.co/QX1fWDT/default-meta-image.png"
                     
             data["image"] = record_image_link
         except:
