@@ -30,11 +30,13 @@ def udemyscrape(course_name):
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
     driver.get(edx_url)
     records=[]
+    run=0
     while len(records)<3:
         htmlSource = driver.page_source
         soup = BeautifulSoup(htmlSource, 'html.parser')
         records = soup.findAll("div", {"class":"popover--popover--t3rNO popover--popover-hover--14ngr"})
-        if len(records)==0:
+        run+=1
+        if run==5:
             return []
     driver.close()
     # time.sleep(7.5)
