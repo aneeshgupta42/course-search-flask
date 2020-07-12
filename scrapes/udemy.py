@@ -25,9 +25,8 @@ def udemyscrape(course_name):
     edx_home_url = "https://www.udemy.com"
     edx_url = "https://www.udemy.com/courses/search/?src=ukw&q="+ edx_name_parse
     # print(edx_url)
-    # r = session.get(edx_url)
+    # Not needed - prev method that didn't work. here for reference
     pageContent=requests.get(edx_url)
-    # r.html.render()
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
     driver.get(edx_url)
     records=[]

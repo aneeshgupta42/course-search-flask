@@ -24,6 +24,7 @@ def edxscrape(course_name):
     edx_url = "https://www.edx.org/search?tab=course&q=" + edx_name_parse
     print(edx_url)
 
+    # Not needed - prev method that didn't work. here for reference
     pageContent=requests.get(edx_url)
     htmlSource = pageContent.text
 
