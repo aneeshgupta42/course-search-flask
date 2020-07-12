@@ -11,7 +11,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 def edxscrape(course_name):
     edx_name_parse = quote(course_name)
     edx_home_url = "https://www.edx.org"
-    edx_url = "https://www.edx.org/search?tab=program&q=" + edx_name_parse
+    edx_url = "https://www.edx.org/search?tab=course&q=" + edx_name_parse
     print(edx_url)
 
     pageContent=requests.get(edx_url)
@@ -24,10 +24,10 @@ def edxscrape(course_name):
     # print(htmlSource)
     driver.close()
 
-    print(htmlSource.count("discovery-card-inner-wrapper"))
+    print(htmlSource.count("discovery-card Verified and Audit col col-xl-3 mb-4 scrollable-discovery-card-spacing"))
 
     soup = BeautifulSoup(htmlSource, 'html.parser')
-    records = soup.findAll("div", {"class": "discovery-card-inner-wrapper"})
+    records = soup.findAll("div", {"class": "discovery-card Verified and Audit col col-xl-3 mb-4 scrollable-discovery-card-spacing"})
     # print(records)
     # reqd_path = '//li[@class="ais-InfiniteHits-item"]'
     # records = tree.xpath(reqd_path)
@@ -58,7 +58,7 @@ def edxscrape(course_name):
             data["partner"] = "edx"
 
         try:
-            record_course_title = record_soup.findAll("div", {"class":"discovery-card-inner-wrapper"})
+            record_course_title = record_soup.findAll("div", {"class":"discovery-card Verified and Audit col col-xl-3 mb-4 scrollable-discovery-card-spacing"})
             record_title = record_course_title[0].get("aria-label")  
             print(record_title) 
             data["title"] = record_title
