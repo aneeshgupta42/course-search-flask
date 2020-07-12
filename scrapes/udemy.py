@@ -30,17 +30,27 @@ def udemyscrape(course_name):
     # r.html.render()
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
     driver.get(edx_url)
-    time.sleep(5)
-    htmlSource = driver.page_source
-    # print(htmlSource)
-    soup = BeautifulSoup(htmlSource, 'html.parser')
-    tree = html.fromstring(htmlSource)
-    # print(tree)
+    records=[]
+    while len(records)<5:
+        htmlSource = driver.page_source
+        soup = BeautifulSoup(htmlSource, 'html.parser')
+        records = soup.findAll("div", {"class":"popover--popover--t3rNO popover--popover-hover--14ngr"})
     driver.close()
+    # time.sleep(7.5)
+        
+    # print(htmlSource)
+    
+    # time.sleep(5)
+    # htmlSource = driver.page_source
+    # print(htmlSource)
+    # soup = BeautifulSoup(htmlSource, 'html.parser')
+    # tree = html.fromstring(htmlSource)
+    # print(tree)
+    
     # print(pageContent.text)
-    soup = BeautifulSoup(htmlSource, 'html.parser')
+    # soup = BeautifulSoup(htmlSource, 'html.parser')
     # print(soup)
-    records = soup.findAll("div", {"class":"popover--popover--t3rNO popover--popover-hover--14ngr"})
+    # records = soup.findAll("div", {"class":"popover--popover--t3rNO popover--popover-hover--14ngr"})
     print(records)
     print("Num of records on page:", len(records))
     top_5_records = records[:5]
