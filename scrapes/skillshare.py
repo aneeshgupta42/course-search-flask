@@ -30,12 +30,17 @@ def skillsharescrape(course_name):
 
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
     driver.get(skillshare_url)
+    records=[]
+    while len(records)<5:
+        htmlSource = driver.page_source
+        soup = BeautifulSoup(htmlSource, 'html.parser')
+        records = soup.findAll("div", {"class":"ss-card ss-class"})
+        if len(records)==0:
+            return []
     #time.sleep()
     htmlSource = driver.page_source
     driver.close()
     # print(pageContent.text)
-    soup = BeautifulSoup(htmlSource, 'html.parser')
-    records = soup.findAll("div", {"class":"ss-card ss-class"})
     #print(records)
     # print(records)
     # reqd_path = '//li[@class="ais-InfiniteHits-item"]'
