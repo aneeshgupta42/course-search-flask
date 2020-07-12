@@ -29,15 +29,20 @@ def edxscrape(course_name):
 
     driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
     driver.get(edx_url)
-    time.sleep(7.5)
-    htmlSource = driver.page_source
+    records=[]
+    while len(records)<5:
+        htmlSource = driver.page_source
+        soup = BeautifulSoup(htmlSource, 'html.parser')
+        records = soup.findAll("div", {"class": "discovery-card Verified and Audit col col-xl-3 mb-4 scrollable-discovery-card-spacing"})
+    # time.sleep(7.5)
+        
     # print(htmlSource)
     driver.close()
 
     print(htmlSource.count("discovery-card Verified and Audit col col-xl-3 mb-4 scrollable-discovery-card-spacing"))
 
-    soup = BeautifulSoup(htmlSource, 'html.parser')
-    records = soup.findAll("div", {"class": "discovery-card Verified and Audit col col-xl-3 mb-4 scrollable-discovery-card-spacing"})
+    # soup = BeautifulSoup(htmlSource, 'html.parser')
+    # records = soup.findAll("div", {"class": "discovery-card Verified and Audit col col-xl-3 mb-4 scrollable-discovery-card-spacing"})
     # print(records)
     # reqd_path = '//li[@class="ais-InfiniteHits-item"]'
     # records = tree.xpath(reqd_path)
