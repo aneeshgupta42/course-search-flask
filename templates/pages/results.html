@@ -9,6 +9,7 @@
     <input type="submit">
   </form>
   <!-- <ul> -->
+  {% for courses in websites %}  
   {% for course in courses %}
     <!-- <li> -->
       <h1>{{course["title"]}}</h1>
@@ -16,6 +17,7 @@
       <img src = '{{course["image"]}}'>
       <a href = '{{course["link"]}}'>Go to course</a>
     <!-- </li> -->
+  {% endfor %}
   {% endfor %}
 <!-- </ul> -->
 </div>

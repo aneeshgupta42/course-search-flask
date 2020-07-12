@@ -1,19 +1,32 @@
 import requests 
+from selenium import webdriver
 from lxml import html
+import time
 from urllib.parse import quote
 from bs4 import BeautifulSoup
+import chromedriver_binary
+from webdriver_manager.chrome import ChromeDriverManager
 
 
-def scrape(course_name):
+def edxscrape(course_name):
     edx_name_parse = quote(course_name)
     edx_home_url = "https://www.edx.org"
-    edx_url = "https://www.edx.org/search?q=" + edx_name_parse
+    edx_url = "https://www.edx.org/search?tab=program&q=" + edx_name_parse
     print(edx_url)
+
     pageContent=requests.get(edx_url)
-    # print(pageContent.text)
-    soup = BeautifulSoup(pageContent.text, 'html.parser')
-    tree = html.fromstring(pageContent.content)
-    print(tree)
+    htmlSource = pageContent.text
+
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver.get(edx_url)
+    time.sleep(7.5)
+    htmlSource = driver.page_source
+    # print(htmlSource)
+    driver.close()
+
+    print(htmlSource.count("discovery-card-inner-wrapper"))
+
+    soup = BeautifulSoup(htmlSource, 'html.parser')
     records = soup.findAll("div", {"class": "discovery-card-inner-wrapper"})
     # print(records)
     # reqd_path = '//li[@class="ais-InfiniteHits-item"]'
@@ -26,10 +39,10 @@ def scrape(course_name):
         # break
         data = {}
         record_soup = BeautifulSoup(str(record), 'html.parser')
-        print(record_soup)
+        # print(record_soup)
         
         try:
-            record_url = record_soup.findAll('a', {"data-click-key":"search.search.click.search_card"})
+            record_url = record_soup.findAll('a', {"class":"discovery-card-link"})
             record_link = edx_home_url + record_url[0].get("href")
             print(record_link)
             data["link"] = record_link
@@ -37,23 +50,23 @@ def scrape(course_name):
             data["link"] = edx_url
 
         try:
-            record_name_span = record_soup.findAll("span", {"class":"partner-name"})
-            record_partner_name = record_name_span[0].text  
+            record_name_span = record_soup.findAll("img", {"class":"partner-logo"})
+            record_partner_name = record_name_span[0].get("alt") 
             print(record_partner_name) 
             data["partner"] = record_partner_name
         except:
             data["partner"] = "edx"
 
         try:
-            record_course_title = record_soup.findAll("h2", {"class":"color-primary-text card-title headline-1-text"})
-            record_title = record_course_title[0].text  
+            record_course_title = record_soup.findAll("div", {"class":"discovery-card-inner-wrapper"})
+            record_title = record_course_title[0].get("aria-label")  
             print(record_title) 
             data["title"] = record_title
         except:
             data["title"] = course_name
         
         try:
-            record_image_div = record_soup.findAll("div", {"class":"image-wrapper"})
+            record_image_div = record_soup.findAll("div", {"class":"d-card-hero"})
             image = BeautifulSoup(str(record_image_div[0]), 'html.parser').findAll('img')[0]
             record_image_link = image.get('src')
             print(record_image_link) 
@@ -70,5 +83,5 @@ def scrape(course_name):
 if __name__ == "__main__":
     # tree = scrape("computer vision")
     # tree = scrape("java")
-    tree = scrape("machine learning")
+    tree = edxscrape("machine learning")
 

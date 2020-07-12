@@ -4,7 +4,7 @@ from urllib.parse import quote
 from bs4 import BeautifulSoup
 
 
-def scrape(course_name):
+def courserascrape(course_name):
     course_name_parse = quote(course_name)
     coursera_home_url = "https://www.coursera.org"
     coursera_url = "https://www.coursera.org/search?query=" + course_name_parse
@@ -69,5 +69,5 @@ def scrape(course_name):
 if __name__ == "__main__":
     # tree = scrape("computer vision")
     # tree = scrape("java")
-    tree = scrape("data structures algorithms")
+    tree = courserascrape("data structures algorithms")
 
