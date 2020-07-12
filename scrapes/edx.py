@@ -35,6 +35,8 @@ def edxscrape(course_name):
         htmlSource = driver.page_source
         soup = BeautifulSoup(htmlSource, 'html.parser')
         records = soup.findAll("div", {"class": "discovery-card Verified and Audit col col-xl-3 mb-4 scrollable-discovery-card-spacing"})
+        if len(records)==0:
+            return []
     # time.sleep(7.5)
         
     # print(htmlSource)

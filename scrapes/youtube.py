@@ -33,6 +33,8 @@ def youtubescrape(course_name):
         soup = BeautifulSoup(htmlSource, 'html.parser')
         records = soup.findAll("ytd-video-renderer", {"class": "style-scope ytd-item-section-renderer"})
         print("Num of records on page:", len(records))
+        if len(records)==0:
+            return []
         top_5_records = records[:5]
         return_list = []
         for record in top_5_records:

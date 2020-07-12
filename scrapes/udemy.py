@@ -34,6 +34,8 @@ def udemyscrape(course_name):
         htmlSource = driver.page_source
         soup = BeautifulSoup(htmlSource, 'html.parser')
         records = soup.findAll("div", {"class":"popover--popover--t3rNO popover--popover-hover--14ngr"})
+        if len(records)==0:
+            return []
     driver.close()
     # time.sleep(7.5)
         
