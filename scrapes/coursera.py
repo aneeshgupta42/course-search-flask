@@ -12,8 +12,6 @@ def courserascrape(course_name):
     pageContent=requests.get(coursera_url)
     # print(pageContent.text)
     soup = BeautifulSoup(pageContent.text, 'html.parser')
-    tree = html.fromstring(pageContent.content)
-    print(tree)
     records = soup.findAll("li", {"class":"ais-InfiniteHits-item"})
     # print(records)
     # reqd_path = '//li[@class="ais-InfiniteHits-item"]'
