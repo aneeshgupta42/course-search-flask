@@ -12,6 +12,7 @@ from scrapes.coursera import courserascrape
 from scrapes.edx import edxscrape
 from scrapes.youtube import youtubescrape
 from scrapes.udemy import udemyscrape
+from scrapes.skillshare import skillsharescrape
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
