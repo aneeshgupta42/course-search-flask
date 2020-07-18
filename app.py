@@ -7,10 +7,12 @@ from flask import Flask, render_template, request
 import logging
 from logging import Formatter, FileHandler
 from forms import *
+import wikipedia as wiki
 import os
 from scrapes.coursera import courserascrape 
 from scrapes.edx import edxscrape
 from scrapes.youtube import youtubescrape
+from scrapes.libgen import libgenscrape
 from scrapes.udemy import udemyscrape
 #----------------------------------------------------------------------------#
 # App Config.
@@ -56,13 +58,23 @@ def my_form():
 def my_courses_search():
     text = request.form['text']
     coursera = courserascrape(text)
-    edx = edxscrape(text)
-    udemy = udemyscrape(text)
-    youtube= youtubescrape(text)
+    # edx = edxscrape(text)
+    libgen = libgenscrape(text)
+    # udemy = udemyscrape(text)
+    # youtube= youtubescrape(text)
     # print(youtubescrape(text))
-    processed_text = {"COURSERA":coursera, "EDX": edx, "UDEMY": udemy, "YOUTUBE":youtube}
+    try:
+        wiki_summary = wiki.summary(text)
+    except:
+        wiki_summary = False
     
-    return render_template('pages/results.html', websites = processed_text)
+    if wiki_summary:
+        wiki_summary = wiki_summary.split('\n')[:2]
+        wiki_summary[0] = "n:/" + text + ": "+ wiki_summary[0]
+        print(wiki_summary)
+    processed_text = {"COURSERA":coursera, "Libgen": libgen, "EDX": [], "UDEMY": [], "YOUTUBE":[]}
+    
+    return render_template('pages/results.html', summary = wiki_summary, websites = processed_text)
 
 
 @app.route('/about')

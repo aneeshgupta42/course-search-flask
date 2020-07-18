@@ -3,13 +3,20 @@
 {% block content %}
 <div class="page-header">
   <form method="POST">
-
-    <h1 class="display-4">Enter a <strong>Course topic</strong></h1>
+    <h1 class="display-4">What do you want to learn?</h1>
     <div class="form-group">
-      <input class="form-control input-lg" style="height: 2em; font-size: 1.5em; margin-bottom: 0.5em;" name="text">
-      <input class="form-control btn btn-primary input-lg" style="height: 2em; font-size: 1.5em;" type="submit">
-    </div>
+      <input name="text" style="width:20rem; height: 3rem; font-size: 1rem; font-size: large; margin-right: 2rem;" value = "">
+      <input class="btn btn-primary" style="width:10rem; height: 4.5rem;font-size: medium;" type="submit">
+      </div>
   </form>
+  <span style='font-family: "Courier New";'>
+  {% if summary %}
+    <h2>Here's a summary:</h2>
+    {% for line in summary %}
+      <h4>{{line}}</h4>
+    {% endfor %}
+  {% endif %}
+</span> 
   {% for courses in websites %}
 
   {% for course in websites[courses] %}
@@ -19,7 +26,7 @@
       <h1>{{course["title"]}}</h1>
       <h2 style="color: lightcoral;">Offered by: {{course["partner"]}}</h2>
       <img style="width: 18rem; height: 18rem;" src='{{course["image"]}}'>
-      <a href='{{course["link"]}}' style="margin-left: 3em; font-size: 2em;">Go to course</a>
+      <a href='{{course["link"]}}' style="margin-left: 3em; font-size: 2em;">Take me there</a>
     </div>
   </ul>
   {% endfor %}
