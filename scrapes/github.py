@@ -1,10 +1,8 @@
-from github import Github
 import requests
-g = Github("2d1bdc9ba522026c6bd5ac39fa43ba822ccc5a55")
+
 
 
 def scrapegithub(language):
-    repositories = g.search_repositories(query='language:'+language)
     headers = {'Accept': 'application/vnd.github.mercy-preview+json'}
     repos= requests.get("https://api.github.com/search/repositories?q="+language+"&sort=stars&order=desc", headers=headers)
     github_url="www.github.com"
