@@ -75,7 +75,7 @@ def youtubescrape(course_name):
                 print(record_image_link) 
                 # record_image_link= record_image_link.split("?")[0]
                 
-                if record_image_link==null:
+                if record_image_link is None:
                     record_image_link = "https://i.ibb.co/cXxjQ7C/youtube.jpg"
                 data["image"] = record_image_link
             except:
