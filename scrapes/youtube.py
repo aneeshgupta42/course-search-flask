@@ -1,107 +1,91 @@
-import requests 
-from selenium import webdriver
-from lxml import html
-import time
-from urllib.parse import quote
-from bs4 import BeautifulSoup
-import chromedriver_binary
-from webdriver_manager.chrome import ChromeDriverManager
+from apiclient.discovery import build 
+import re
 import os
-import chromedriver_binary
-from webdriver_manager.chrome import ChromeDriverManager
+   
+# Arguments that need to passed to the build function 
+DEVELOPER_KEY = os.environ.get('YOUTUBE_KEY')
+YOUTUBE_API_SERVICE_NAME = "youtube"
+YOUTUBE_API_VERSION = "v3"
+   
+# creating Youtube Resource Object 
+youtube_object = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, 
+                                        developerKey = DEVELOPER_KEY) 
+   
+   
+def youtube_search_keyword(query, max_results): 
+       
+    # calling the search.list method to 
+    # retrieve youtube search results 
+    
+    search_keyword = youtube_object.search().list(q = query, part = "id, snippet", 
+                                               maxResults = max_results).execute() 
+       
+    # extracting the results from search response 
+    results = search_keyword.get("items", []) 
+    youtube_url="www.youtube.com"
+   
+    # empty list to store video,  
+    # channel, playlist metadata 
+ 
+    return_list = []
+    # extracting required info from each result object 
+    for result in results: 
+        # video result object 
+        # print(result["kind"])
+        # print(result)
+        # print("\n")
+        data = {}
 
+        if result['id']['kind'] == "youtube#video" and query in result["snippet"]["title"]: 
+            # print(result["snippet"]["title"])
+            print(result["snippet"]["thumbnails"]["default"]["url"])
+        
+      
+            # data["link"]="https://www.youtube.com/watch?v="+result["id"]["videoId"]
+        
+            try:
+                data["link"] = "https://www.youtube.com/watch?v="+result["id"]["videoId"]
+            except:
+                data["link"] = youtube_url
 
-GOOGLE_CHROME_PATH = '/app/.apt/usr/bin/google_chrome'
-CHROMEDRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
+            try:
+                data["partner"] = result["snippet"]["channelTitle"]
+            except:
+                data["partner"] = "Youtube"
 
-def youtubescrape(course_name):
-    chrome_bin = os.environ.get('GOOGLE_CHROME_BIN', 'chromedriver')
-    edx_name_parse = quote(course_name)
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument("--headless") 
-    chrome_options.binary_location = chrome_bin
-    edx_home_url = "https://www.youtube.com"
-    edx_url = "https://www.youtube.com/results?search_query=" + edx_name_parse
-
-    driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH,chrome_options=chrome_options)
-    driver.get(edx_url)
-    records=[]
-    while len(records)<5:
-        htmlSource = driver.page_source
-        soup = BeautifulSoup(htmlSource, 'html.parser')
-        records = soup.findAll("ytd-video-renderer", {"class": "style-scope ytd-item-section-renderer"})
-        print("Num of records on page:", len(records))
-        if len(records)==0:
-            return []
-        top_5_records = records[:5]
-        return_list = []
-        for record in top_5_records:
-            # print(str(record))
-            # break
-            data = {}
-            record_soup = BeautifulSoup(str(record), 'html.parser')
-            # print(record_soup)
+            try:
+                # re.escape(result["snippet"]["title"])
+                data["title"] = result["snippet"]["title"]
+            except:
+                data["title"] = query
             
             try:
-                record_url = record_soup.findAll('a', {"class":"yt-simple-endpoint style-scope ytd-video-renderer"})
-                record_link = edx_home_url + record_url[0].get("href")
-                print(record_link)
-                data["link"] = record_link
-            except:
-                data["link"] = edx_url
-
-            try:
-                record_name_span = record_soup.findAll("a", {"class":"yt-simple-endpoint style-scope yt-formatted-string"})
-                record_partner_name = record_name_span[0].text
-                print(record_partner_name) 
-                data["partner"] = record_partner_name
-            except:
-                data["partner"] = "edx"
-
-            try:
-                record_course_title = record_soup.findAll("a", {"class":"yt-simple-endpoint style-scope ytd-video-renderer"})
-                record_title = record_course_title[0].get("title")
-                print(record_title) 
-                data["title"] = record_title
-            except:
-                data["title"] = course_name
-            
-            try:
-                record_image_div = record_soup.findAll("yt-img-shadow", {"class":"style-scope ytd-thumbnail no-transition"})
-                image = BeautifulSoup(str(record_image_div[0]), 'html.parser').findAll('img')[0]
-                record_image_link = image.get('src')
-                print(record_image_link) 
-                # record_image_link= record_image_link.split("?")[0]
-                
-                if record_image_link is None:
-                    record_image_link = "https://i.ibb.co/cXxjQ7C/youtube.jpg"
-                data["image"] = record_image_link
+                data["image"] = result["snippet"]["thumbnails"]["default"]["url"]
             except:
                 data["image"] = ""
             data["color"]="red"
             return_list.append(data)
-
             print("\n")
-
-    
-    # print(htmlSource)
-    driver.close()
-
-    # print(htmlSource.count("discovery-card Verified and Audit col col-xl-3 mb-4 scrollable-discovery-card-spacing"))
-
-    
-    # print(records)
-    # reqd_path = '//li[@class="ais-InfiniteHits-item"]'
-    # records = tree.xpath(reqd_path)
-    
 
     return return_list
 
-    
+            # videos.append("% s (% s) (% s) (% s)" % (result["snippet"]["title"], 
+            #                 result["id"]["videoId"], result['snippet']['description'], 
+            #                 result['snippet']['thumbnails']['default']['url'])) 
+  
+        # # playlist result object 
+        # elif result['id']['kind'] == "youtube# playlist": 
+        #     playlists.append("% s (% s) (% s) (% s)" % (result["snippet"]["title"], 
+        #                          result["id"]["playlistId"], 
+        #                          result['snippet']['description'], 
+        #                          result['snippet']['thumbnails']['default']['url'])) 
+  
+        # # channel result object 
+        # elif result['id']['kind'] == "youtube# channel": 
+        #     channels.append("% s (% s) (% s) (% s)" % (result["snippet"]["title"], 
+        #                            result["id"]["channelId"],  
+        #                            result['snippet']['description'],  
+        #                            result['snippet']['thumbnails']['default']['url'])) 
 
-if __name__ == "__main__":
-    # tree = scrape("computer vision")
-    # tree = scrape("java")
-    tree = edxscrape("machine learning")
+if __name__ == "__main__": 
+    youtube_search_keyword('Geeksforgeeks', max_results = 10) 

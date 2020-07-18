@@ -11,7 +11,7 @@ import wikipedia as wiki
 import os
 from scrapes.coursera import courserascrape 
 from scrapes.edx import edxscrape
-from scrapes.youtube import youtubescrape
+from scrapes.youtube import youtube_search_keyword
 from scrapes.libgen import libgenscrape
 from scrapes.udemy import udemyscrape
 #----------------------------------------------------------------------------#
@@ -58,6 +58,7 @@ def my_form():
 def my_courses_search():
     text = request.form['text']
     coursera = courserascrape(text)
+    youtube= youtube_search_keyword(text,7)
     # edx = edxscrape(text)
     libgen = libgenscrape(text)
     # udemy = udemyscrape(text)
@@ -72,7 +73,7 @@ def my_courses_search():
         wiki_summary = wiki_summary.split('\n')[:2]
         wiki_summary[0] = "n:/" + text + ": "+ wiki_summary[0]
         print(wiki_summary)
-    processed_text = {"COURSERA":coursera, "Libgen": libgen, "EDX": [], "UDEMY": [], "YOUTUBE":[]}
+    processed_text = {"COURSERA":coursera, "LIBGEN": libgen, "EDX": [], "UDEMY": [], "YOUTUBE":youtube}
     
     return render_template('pages/results.html', summary = wiki_summary, websites = processed_text)
 

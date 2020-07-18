@@ -72,7 +72,7 @@ def libgenscrape(topic):
         except:
             data["image"] = ""
         
-        data["color"]="lightblue"
+        data["color"]="lightgreen"
         return_list.append(data)
         print("\n")
 
