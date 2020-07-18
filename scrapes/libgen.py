@@ -17,6 +17,7 @@ def libgenscrape(topic):
     pageContent=requests.get(libgen_url)
     # print(pageContent.text)
     soup = BeautifulSoup(pageContent.text, 'html.parser')
+    print(soup)
     records = soup.findAll("tr", {"valign":"top"})
     # print(records)
     # reqd_path = '//li[@class="ais-InfiniteHits-item"]'
