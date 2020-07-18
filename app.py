@@ -14,6 +14,8 @@ from scrapes.edx import edxscrape
 from scrapes.youtube import youtube_search_keyword
 from scrapes.libgen import libgenscrape
 from scrapes.udemy import udemyscrape
+from scrapes.dev import devscrape
+import requests
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -57,10 +59,16 @@ def my_form():
 @app.route('/', methods=['POST'])
 def my_courses_search():
     text = request.form['text']
+    # resp = requests.get('https://dev.to/api/articles/')
+    # print(resp.json())
     coursera = courserascrape(text)
     youtube= youtube_search_keyword(text,7)
+    
+    
     # edx = edxscrape(text)
     libgen = libgenscrape(text)
+    dev= devscrape(text)
+    # print(dev)
     # udemy = udemyscrape(text)
     # youtube= youtubescrape(text)
     # print(youtubescrape(text))
@@ -73,7 +81,7 @@ def my_courses_search():
         wiki_summary = wiki_summary.split('\n')[:2]
         wiki_summary[0] = "n:/" + text + ": "+ wiki_summary[0]
         print(wiki_summary)
-    processed_text = {"COURSERA":coursera, "LIBGEN": libgen, "EDX": [], "UDEMY": [], "YOUTUBE":youtube}
+    processed_text = {"COURSERA":coursera, "LIBGEN": libgen, "EDX": [], "UDEMY": [], "YOUTUBE":youtube, "DEV":dev}
     
     return render_template('pages/results.html', summary = wiki_summary, websites = processed_text)
 
