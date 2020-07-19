@@ -2,14 +2,14 @@ from apiclient.discovery import build
 import re
 import os
    
-# # Arguments that need to passed to the build function 
-# DEVELOPER_KEY = os.environ.get('YOUTUBE_KEY')
-# YOUTUBE_API_SERVICE_NAME = "youtube"
-# YOUTUBE_API_VERSION = "v3"
+# Arguments that need to passed to the build function 
+DEVELOPER_KEY = os.environ.get('YOUTUBE_KEY')
+YOUTUBE_API_SERVICE_NAME = "youtube"
+YOUTUBE_API_VERSION = "v3"
    
-# # creating Youtube Resource Object 
-# youtube_object = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, 
-#                                         developerKey = DEVELOPER_KEY) 
+# creating Youtube Resource Object 
+youtube_object = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, 
+                                        developerKey = DEVELOPER_KEY) 
    
    
 def youtube_search_keyword(query, max_results): 
