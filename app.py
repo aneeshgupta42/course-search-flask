@@ -3,6 +3,7 @@
 #----------------------------------------------------------------------------#
 
 from flask import Flask, render_template, request
+from flask_cors import CORS
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
@@ -17,11 +18,13 @@ from scrapes.udemy import udemyscrape
 from scrapes.dev import devscrape
 from scrapes.github import scrapegithub
 import requests
+import json
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_object('config')
 #db = SQLAlchemy(app)
 
@@ -57,34 +60,34 @@ def home():
 def my_form():
     return render_template('my-form.html')
 
-@app.route('/', methods=['POST'])
-def my_courses_search():
-    text = request.form['text']
-    github=scrapegithub(text)
+@app.route('/<course>', methods=['POST', 'GET'])
+def my_courses_search(course):
+    # text = request.form['text']
+    github=scrapegithub(course)
     # resp = requests.get('https://dev.to/api/articles/')
     # print(resp.json())
-    coursera = courserascrape(text)
+    coursera = courserascrape(course)
     youtube= youtube_search_keyword(text,7)
     
     
     # edx = edxscrape(text)
-    libgen = libgenscrape(text)
-    dev= devscrape(text)
+    libgen = libgenscrape(course)
+    dev= devscrape(course)
     # print(dev)
     # udemy = udemyscrape(text)
     # youtube= youtubescrape(text)
     # print(youtubescrape(text))
     try:
-        wiki_summary = wiki.summary(text)
+        wiki_summary = wiki.summary(course)
     except:
         wiki_summary = False
     
     if wiki_summary:
         wiki_summary = wiki_summary.split('\n')[:2]
-        wiki_summary[0] = "n:/" + text + ": "+ wiki_summary[0]
+        wiki_summary[0] = "n:/" + course + ": "+ wiki_summary[0]
         print(wiki_summary)
-    processed_text = {"COURSERA":coursera, "LIBGEN": libgen, "EDX": [], "UDEMY": [], "YOUTUBE":youtube, "DEV":dev, "GITHUB":github}
-    
+    processed_text = { "WIKIPEDIA":wiki_summary,"COURSERA":coursera, "LIBGEN": libgen, "EDX": [], "UDEMY": [], "YOUTUBE":youtube, "DEV":dev, "GITHUB":github}
+    return json.dumps(processed_text)
     return render_template('pages/results.html', summary = wiki_summary, websites = processed_text)
 
 

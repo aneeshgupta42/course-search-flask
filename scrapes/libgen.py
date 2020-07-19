@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 def libgenscrape(topic):
     books_base = "/static/ico/book{}.jpg"
-    books_urls = [books_base.format(k) for k in range(1,6)]
+    books_urls = ["https://i.ibb.co/dBPg1h7/book1.jpg","https://i.ibb.co/VMMbRV1/book2.jpg","https://i.ibb.co/YRqVjh7/book3.jpg","https://i.ibb.co/BVpv4T2/book4.jpg","https://i.ibb.co/9ygGHM4/book5.jpg"]
     random.shuffle(books_urls)
     libgen_home = "https://libgen.is"
     topic_name_parse = quote(topic)
