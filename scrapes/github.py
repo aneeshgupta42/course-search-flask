@@ -16,7 +16,7 @@ def scrapegithub(language):
         # break
         data = {}
         try:
-            data["link"] = repo["url"]
+            data["link"] = repo["html_url"]
         except:
             data["link"] = github_url
 
