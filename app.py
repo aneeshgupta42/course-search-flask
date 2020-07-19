@@ -67,7 +67,7 @@ def my_courses_search(course):
     # resp = requests.get('https://dev.to/api/articles/')
     # print(resp.json())
     coursera = courserascrape(course)
-    youtube= youtube_search_keyword(text,7)
+    youtube= youtube_search_keyword(course,7)
     
     
     # edx = edxscrape(text)
